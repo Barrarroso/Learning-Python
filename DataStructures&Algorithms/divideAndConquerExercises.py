@@ -145,6 +145,53 @@ def lowest_even_lowest_odd(_list: list) -> tuple:
 
     return minimum_even, minimum_odd
 
+def binary_search(_list: list, x: int) -> int:
+    """Implement a method based on divide and conquer strategy that
+    takes a sorted Python List of numbers, A, and a number, x. The method must return the
+    index of x in the list. If x is not found, the method returns -1.
+    """
+    if _list is None or len(_list) == 0:
+        return
+
+    return _binary_search(_list, x, 0, len(_list)-1)
+
+def _binary_search(_list: list, x: int, start, end) -> int:
+    if start>end:
+        return -1
+
+    m = (start+end)//2
+    if _list[m] == x:
+        return m
+
+    elif _list[m] > x:
+        #left half search
+        return _binary_search(_list, x, start, m-1)
+    elif _list[m] < x:
+        #right half search
+        return _binary_search(_list, x, m+1, end)
+
+    #(1,3,7,10,20,25)
+
+def occurences_of(s: str, c: str) -> int:
+    """Implement a recursive function taking two parameters: a
+    string, s, and a character, c. The method returns the number of occurrences of c in s.
+    The solution must be based on the divide-and-conquer strategy (other approaches
+    will not be evaluated).
+    """
+    if s is None or len(s) == 0:
+        return
+
+    if len(s) == 1:
+        return 1 if s[0] == c else 0
+
+    middle = len(s)//2
+    part1 = s[:middle]
+    part2 = s[middle:]
+
+    occurences_left = occurences_of(part1, c)
+    occurences_right = occurences_of(part2, c)
+    return occurences_left + occurences_right
+
 data = [1,3,1,2,-2,5,6,7,19,20,5,6,20,36]
 
 
@@ -157,3 +204,11 @@ print(largest_smallest_of(data))
 print(lowest_even_lowest_odd(data))
 
 print(get_positions_of(data, 5))
+
+ordered_data = [1,3,4,10,20,25]
+
+print(binary_search(ordered_data, 10))
+
+
+mystring = "that is a phrase that has a lot of a's"
+print(occurences_of(mystring,'a'))
